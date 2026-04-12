@@ -1,0 +1,38 @@
+project:
+  name: "BARDIC"
+  description: "Base-level Agent for Retrieval, Discourse, and Internal Consistency"
+  seed: 42
+
+directories:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  models: "models/"
+  logs: "experiments/logs"
+
+rag_encoder:
+  source: "wikipedia"
+  embedding_model: "all-MiniLM-L6-v2"
+  chunk_size_words: 500
+  top_k_retrievals: 3
+
+poet_decoder:
+  model_name: "t5-base"  
+  max_source_length: 512 
+  max_target_length: 128 
+  temperature: 0.8       
+
+bardic_constraints:
+  output_type: "quatrain"
+  lines_per_stanza: 4
+  num_stanzas: 1
+  allowed_rhyme_schemes: ["AABB", "ABAB", "ABBA"]
+  target_syllables_per_line: 10
+  use_hidden_titles: true  # Kept this from your old file!
+
+reinforce_training:
+  epochs: 20
+  batch_size: 8
+  learning_rate: 1.0e-5
+  critic_thresholds:
+    min_consistency_score: 0.75
+    max_retry_attempts: 3
