@@ -1,26 +1,30 @@
 class ArtEvaluator:
-    def evaluate(self, draft, context, raw_score):
+    def __init__(self):
+        pass
+
+    def evaluate(self, draft: str, awen: dict, score: float):
         """
-        Refines the ArtCritic's raw output into a diagnostic report for the Logger.
+        Performs the final audit before Ceridwen archives the results.
         """
-        # 1. Internal Diagnostics
-        # Note: Using 'draft' to match the argument name
-        results = {
-            "has_title": "<TITLE>" in draft,
-            "line_count": draft.count("<LINE>"),
-            "is_boolean": draft.strip() in ["True", "False", "<TITLE> True", "<TITLE> False"],
-            "context_hallucination": False # Placeholder for future RAG checks
+        # Detection for "Boolean Panic" (returning True/False instead of text)
+        is_hallucinated = False
+        if draft.strip().lower() in ["true", "false", "none", "no context found"]:
+            is_hallucinated = True
+            score = 0.0
+            
+        # Check if the Poet actually used the sacred essence (awen)
+        # We look for the 4 line titles in the poem
+        found_titles = [t for t in awen['line_titles'] if t.lower() in draft.lower()]
+        
+        report = {
+            "score": score,
+            "status": "NOMINAL" if score >= 0.75 else "UNSTABLE",
+            "internal_consistency": {
+                "titles_found": found_titles,
+                "title_count": len(found_titles),
+                "context_summary_used": any(word in draft.lower() for word in awen['summary'].split()[:5])
+            },
+            "boolean_panic_detected": is_hallucinated
         }
         
-        # 2. Status Determination
-        # We use the raw_score from the Critic, but we can also use our internal results
-        status = "NOMINAL" if raw_score >= 0.8 else "UNSTABLE"
-        
-        # 3. The Single Return
-        # This packages everything for the Logger in main.py
-        return {
-            "final_score": round(raw_score, 2),
-            "status": status,
-            "diagnostics": results,
-            "length_chars": len(draft)
-        }
+        return report

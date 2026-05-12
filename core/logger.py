@@ -1,34 +1,31 @@
 import json
-import csv
 import os
 from datetime import datetime
 
-class BardicLogger:
-    def __init__(self, log_dir="logs"):
+class AgentLogger:
+    def __init__(self, log_dir: str = "logs"):
         self.log_dir = log_dir
-        os.makedirs(self.log_dir, exist_ok=True)
-        self.trace_file = os.path.join(self.log_dir, "full_traces.jsonl")
-        self.metrics_file = os.path.join(self.log_dir, "summary_metrics.csv")
-        self._init_metrics()
+        if not os.path.exists(self.log_dir):
+            os.makedirs(self.log_dir)
+        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.log_file = os.path.join(self.log_dir, f"full_traces_{self.timestamp}.jsonl")
 
-    def _init_metrics(self):
-        if not os.path.exists(self.metrics_file):
-            with open(self.metrics_file, 'w', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerow(["timestamp", "topic", "score", "status", "tokens_in"])
-
-    def record(self, trace):
-        # The Deep Dive (JSONL)
-        with open(self.trace_file, 'a') as f:
-            f.write(json.dumps(trace) + "\n")
+    # FIX 1: Changed 'topic' to 'query' to match the main.py keyword arguments
+    def log_mission(self, query: str, draft: str, score: float, status: str, awen: dict | None = None):
+        
+        # Build the core dictionary
+        entry = {
+            "timestamp": datetime.now().isoformat(),
+            "query": query,
+            "draft": draft,
+            "score": score,
+            "status": status
+        }
+        
+        # FIX 2: Merge the Awen payload directly into the JSON object
+        # This keeps the output as exactly one valid JSON object per line
+        if awen:
+            entry["awen_payload"] = awen
             
-        # The Metrics Dashboard (CSV)
-        with open(self.metrics_file, 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow([
-                trace["timestamp"],
-                trace["topic"],
-                trace["evaluation"]["final_score"],
-                trace["evaluation"]["status"],
-                trace["poet_metadata"]["tokens_used"]
-            ])
+        with open(self.log_file, "a", encoding="utf-8") as f:
+            f.write(json.dumps(entry) + "\n")

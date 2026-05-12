@@ -1,10 +1,12 @@
 services:
-  bardic:
-    env_file: .env
-    image: bardic-agent
-    stdin_open: true 
-    tty: true        
+  bardic-agent:
+    build: .
+    container_name: bardic-agent
+    stdin_open: true # <--- Connects your keyboard (interactive mode)
+    tty: true        # <--- Allows for the text prompt to show up
     volumes:
       - ./logs:/app/logs
+      - ./models:/app/models
     environment:
-      - HF_TOKEN=${HF_TOKEN} # Pulls from your local .env or shell
+      - HF_TOKEN=${HF_TOKEN}
+      - PYTHONUNBUFFERED=1 # <--- Forces logs to show up instantly

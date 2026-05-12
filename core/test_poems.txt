@@ -1,0 +1,71 @@
+### PERFECT_PASS
+the borrowed crown grows cold within his hand
+a stranger's oath keeps watch beside the gate
+no bell replies beneath the folded hills
+old law remembers what the king forgets
+
+### STRUCTURE_FAIL_TOO_FEW_1
+the borrowed crown grows cold within his hand
+a stranger's oath keeps watch beside the gate
+no bell replies beneath the folded hills
+
+### STRUCTURE_FAIL_TOO_MANY_2
+the borrowed crown grows cold within his hand
+a stranger's oath keeps watch beside the gate
+no bell replies beneath the folded hills
+old law remembers what the king forgets
+the fifth line wanders where it should not go
+
+### CADENCE_FAIL_SHORT_1
+cold crown falls
+old oath waits
+no bell sounds
+kings forget
+
+### CADENCE_FAIL_LONG_2
+the ancient borrowed crown remembers every broken oath beneath the moon
+a stranger watches from the gate of another kingdom in sorrow
+the soundless valley gathers all the names that no one dares to answer
+old kingship bends beneath ritual law and a mountain of memory
+
+### SEMANTIC_FAIL_OFF_TOPIC_1
+the engine coughs beneath fluorescent shop light
+a socket rolls behind the coffee machine
+the printer jams again before the meeting
+old invoices sleep inside a plastic tray
+
+### SEMANTIC_FAIL_OFF_TOPIC_2
+a garden hose lies curled beside the driveway
+the neighbor's dog disputes the morning mail
+three paper plates escape the picnic table
+a lawn chair dreams beneath the summer rain
+
+### THEME_FAIL_WRONG_ANCHORS_1
+the silver engine turns beneath the road
+a market wakes with bread and painted signs
+the doctor folds a chart beside the bed
+a lantern swings above the harbor wall
+
+### THEME_FAIL_WRONG_ANCHORS_2
+the river counts the stones below the bridge
+a farmer mends the fence before the storm
+the schoolyard fills with chalk and little shoes
+a window gathers dust behind the shop
+
+### RHYME_FAIL_1
+the borrowed crown grows cold within his hand
+a stranger's oath keeps watch beside the gate
+no bell replies beneath the folded hills
+old law remembers what the king forgets
+
+### RHYME_FAIL_2
+the moonless court forgets its ancient name
+a silent oath is buried under rain
+the empty throne refuses any crown
+the hidden king walks back through broken stone
+
+### ALL_PROBLEMS_FAIL
+Pwyll, Arawn, silence
+Output ONLY one line
+banana printer stapler
+kingship kingship kingship kingship kingship

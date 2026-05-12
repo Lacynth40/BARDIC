@@ -14,20 +14,32 @@ rag_encoder:
   embedding_model: "all-MiniLM-L6-v2"
   chunk_size_words: 100
   top_k_retrievals: 2
+  summary_max_words: 100
+  num_line_titles: 4
 
 poet_decoder:
-  model_name: "t5-base"  
-  max_source_length: 512 
-  max_target_length: 128 
-  temperature: 0.8       
+  model_name: "models/bardic_base"
+  max_source_length: 256
+  max_target_length: 128
+
+  max_new_tokens: 80
+  temperature: 0.95
+  top_p: 0.92
+  num_attempts: 24
+
+  debug: true
+
+  semantic_encoder_model: "all-MiniLM-L6-v2"
+  semantic_encoder_device: "cpu"
 
 bardic_constraints:
   output_type: "quatrain"
   lines_per_stanza: 4
   num_stanzas: 1
-  allowed_rhyme_schemes: ["AABB", "ABAB", "ABBA"]
+  allowed_rhyme_schemes:
+    - "ABAB"
   target_syllables_per_line: 10
-  use_hidden_titles: true  # Kept this from your old file!
+  use_hidden_titles: true
 
 reinforce_training:
   epochs: 20
@@ -35,4 +47,4 @@ reinforce_training:
   learning_rate: 1.0e-5
   critic_thresholds:
     min_consistency_score: 0.75
-    max_retry_attempts: 3
+    max_retry_attempts: 5
