@@ -18,12 +18,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Pre-download NLTK data (Anubis needs this)
 RUN python3 -c "import nltk; nltk.download('cmudict')"
 
-# PRE-CACHE MODELS: Bake the brains into the image
-# This prevents downloading ~1GB of weights every time the container starts
-# Trying a different model head. 
-RUN python3 -c "from transformers import T5Tokenizer, T5ForConditionalGeneration; \
-    T5Tokenizer.from_pretrained('google/flan-t5-large'); \
-    T5ForConditionalGeneration.from_pretrained('google/flan-t5-large')"
 
 RUN python3 -c "from sentence_transformers import SentenceTransformer; \
     SentenceTransformer('all-MiniLM-L6-v2')"

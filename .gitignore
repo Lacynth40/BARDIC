@@ -28,7 +28,7 @@ Training/
 *.pt
 *.pth
 *.ckpt
-*.py
+
 
 # Backups
 *_backup_*.py
